@@ -1,0 +1,19 @@
+title: "Electron入門 ~ Webの技術でつくるデスクトップアプリ"
+summary: "HTML、CSS、JavaScript のような Web 技術で、macOS と Windows の両方に対応したデスクトップアプリケーションをつくろう！"
+topics:
+  - "electron"
+  - "javascript"
+  - "nodejs"
+  - "入門"
+published: true
+price: 0
+toc_depth: 2
+chapters:
+  - "13263"
+  - "13309"
+  - "13311"
+  - "13312"
+  - "13319"
+  - "13340"
+  - "13344"
+  - "13345"
