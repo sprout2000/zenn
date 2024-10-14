@@ -13,7 +13,7 @@ https://typescriptbook.jp/reference/functions/type-guard-functions
 
 `src` フォルダ以下へ `lib` というフォルダを作成し、`isTodos.ts` を配置します。
 
-```ts:src/lib/isTodo.ts
+```ts:src/lib/isTodos.ts
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const isTodo = (arg: any): arg is Todo => {
   return (
