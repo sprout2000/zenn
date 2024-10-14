@@ -33,7 +33,7 @@ const handleToggleDrawer = () => {
 type Props = {
   drawerOpen: boolean;
   onToggleDrawer: () => void;
-  onSort: (filter: Filter) => void;
+  onFilter: (filter: Filter) => void;
 };
 ```
 
@@ -132,7 +132,7 @@ export const SideBar = (props: Props) => (
           {/* フィルター選択のための props を設定 */}
           <ListItemButton
             aria-label="list-all"
-            onClick={() => props.onSort('all')}
+            onClick={() => props.onFilter('all')}
           >
             <ListItemIcon>
               <Icon>subject</Icon>
@@ -162,7 +162,7 @@ import { SideBar } from './SideBar';
 +      <SideBar
 +        drawerOpen={drawerOpen}
 +        onToggleDrawer={handleToggleDrawer}
-+        onSort={handleFilter}
++        onFilter={handleFilter}
 +      />
        <FormDialog
          text={text}
@@ -231,7 +231,7 @@ import pjson from '../package.json';
 type Props = {
   drawerOpen: boolean;
   onToggleDrawer: () => void;
-  onSort: (filter: Filter) => void;
+  onFilter: (filter: Filter) => void;
 };
 
 const DrawerList = styled('div')(() => ({
@@ -273,7 +273,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-all"
-            onClick={() => props.onSort('all')}
+            onClick={() => props.onFilter('all')}
           >
             <ListItemIcon>
               <Icon>subject</Icon>
@@ -284,7 +284,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-unchecked"
-            onClick={() => props.onSort('unchecked')}
+            onClick={() => props.onFilter('unchecked')}
           >
             <ListItemIcon>
               <Icon sx={{ color: lightBlue[500] }}>radio_button_unchecked</Icon>
@@ -295,7 +295,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-checked"
-            onClick={() => props.onSort('checked')}
+            onClick={() => props.onFilter('checked')}
           >
             <ListItemIcon>
               <Icon sx={{ color: pink.A200 }}>check_circle_outline</Icon>
@@ -306,7 +306,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-removed"
-            onClick={() => props.onSort('removed')}
+            onClick={() => props.onFilter('removed')}
           >
             <ListItemIcon>
               <Icon>delete</Icon>
@@ -467,7 +467,7 @@ export const App = () => {
       <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
       <SideBar
         drawerOpen={drawerOpen}
-        onSort={handleFilter}
+        onFilter={handleFilter}
         onToggleDrawer={handleToggleDrawer}
       />
       <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />

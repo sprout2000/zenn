@@ -243,13 +243,13 @@ import { ActionButton } from './ActionButton';
 
 ```tsx:src/SideBar.tsx
 type Props = {
-  onSort: (filter: Filter) => void;
+  onFilter: (filter: Filter) => void;
 };
 
 export const SideBar = (props: Props) => (
   <select
     defaultValue="all"
-    onChange={(e) => props.onSort(e.target.value as Filter)}
+    onChange={(e) => props.onFilter(e.target.value as Filter)}
   >
     <option value="all">すべてのタスク</option>
     <option value="checked">完了したタスク</option>
@@ -266,7 +266,7 @@ import { SideBar } from './SideBar';
 ```diff tsx:src/App.tsx
     return (
       <div>
-+       <SideBar onSort={handleFilter} />
++       <SideBar onFilter={handleFilter} />
         <FormDialog
           text={text}
           onChange={handleOnChange}
@@ -348,7 +348,7 @@ import { TodoItem } from './TodoItem';
 ```diff tsx:src/App.tsx
     return (
       <div>
-        <SideBar onSort={handleFilter} />
+        <SideBar onFilter={handleFilter} />
         <FormDialog
           text={text}
           onChange={handleChange}
@@ -508,14 +508,14 @@ export const ActionButton = (props: Props) => {
 
 ```tsx:src/SideBar.tsx
 type Props = {
-  onSort: (filter: Filter) => void;
+  onFilter: (filter: Filter) => void;
 };
 
 export const SideBar = (props: Props) => {
   return (
     <select
       defaultValue="all"
-      onChange={(e) => props.onSort(e.target.value as Filter)}
+      onChange={(e) => props.onFilter(e.target.value as Filter)}
     >
       <option value="all">すべてのタスク</option>
       <option value="checked">完了したタスク</option>
@@ -650,7 +650,7 @@ export const App = () => {
 
   return (
     <div>
-      <SideBar onSort={handleFilter} />
+      <SideBar onFilter={handleFilter} />
       <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
       <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
       <ActionButton todos={todos} onEmpty={handleEmpty} />

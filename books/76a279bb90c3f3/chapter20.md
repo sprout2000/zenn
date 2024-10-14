@@ -95,7 +95,7 @@ https://mui.com/guides/minimizing-bundle-size/
     return (
       <div>
 +       <ToolBar />
-        <SideBar onSort={handleFilter} />
+        <SideBar onFilter={handleFilter} />
         <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
         <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
         <ActionButton todos={todos} onEmpty={handleEmpty} />
@@ -376,7 +376,7 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles styles={{ body: { margin: 0, padding: 0 } }} />
       <ToolBar filter={filter} />
-      <SideBar onSort={handleFilter} />
+      <SideBar onFilter={handleFilter} />
       <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
       <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
       <ActionButton todos={todos} onEmpty={handleEmpty} />

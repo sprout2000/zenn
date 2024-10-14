@@ -73,7 +73,7 @@ import { QR } from './QR';
 ```diff tsx:src/App.tsx
        <SideBar
          drawerOpen={drawerOpen}
-         onSort={handleFilter}
+         onFilter={handleFilter}
          onToggleDrawer={handleToggleDrawer}
        />
 +      <QR open={qrOpen} onClose={handleToggleQR} />
@@ -95,7 +95,7 @@ QR を開くボタンを **SideBar コンポーネント** のリストへ追加
    drawerOpen: boolean;
 +  onToggleQR: () => void;
    onToggleDrawer: () => void;
-   onSort: (filter: Filter) => void;
+   onFilter: (filter: Filter) => void;
  };
 ```
 
@@ -116,7 +116,7 @@ QR を開くボタンを **SideBar コンポーネント** のリストへ追加
     {/* snip */}
     <SideBar
       drawerOpen={drawerOpen}
-      onSort={handleFilter}
+      onFilter={handleFilter}
       // ↓追加
       onToggleQR={handleToggleQR}
       onToggleDrawer={handleToggleDrawer}
@@ -177,7 +177,7 @@ type Props = {
   drawerOpen: boolean;
   onToggleQR: () => void;
   onToggleDrawer: () => void;
-  onSort: (filter: Filter) => void;
+  onFilter: (filter: Filter) => void;
 };
 
 const DrawerList = styled('div')(() => ({
@@ -219,7 +219,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-all"
-            onClick={() => props.onSort('all')}
+            onClick={() => props.onFilter('all')}
           >
             <ListItemIcon>
               <Icon>subject</Icon>
@@ -230,7 +230,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-unchecked"
-            onClick={() => props.onSort('unchecked')}
+            onClick={() => props.onFilter('unchecked')}
           >
             <ListItemIcon>
               <Icon sx={{ color: lightBlue[500] }}>radio_button_unchecked</Icon>
@@ -241,7 +241,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-checked"
-            onClick={() => props.onSort('checked')}
+            onClick={() => props.onFilter('checked')}
           >
             <ListItemIcon>
               <Icon sx={{ color: pink.A200 }}>check_circle_outline</Icon>
@@ -252,7 +252,7 @@ export const SideBar = (props: Props) => (
         <ListItem disablePadding>
           <ListItemButton
             aria-label="list-removed"
-            onClick={() => props.onSort('removed')}
+            onClick={() => props.onFilter('removed')}
           >
             <ListItemIcon>
               <Icon>delete</Icon>
@@ -374,7 +374,7 @@ export const App = () => {
       <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
       <SideBar
         drawerOpen={drawerOpen}
-        onSort={handleFilter}
+        onFilter={handleFilter}
         onToggleQR={handleToggleQR}
         onToggleDrawer={handleToggleDrawer}
       />

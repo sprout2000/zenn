@@ -204,7 +204,7 @@ export const App = () => {
       <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
       <SideBar
         drawerOpen={drawerOpen}
-        onSort={handleFilter}
+        onFilter={handleFilter}
         onToggleQR={handleToggleQR}
         onToggleDrawer={handleToggleDrawer}
       />
