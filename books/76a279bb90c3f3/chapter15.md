@@ -180,7 +180,7 @@ export const App = () => {
     });
   };
 
-  const handleSort = (filter: Filter) => {
+  const handleFilter = (filter: Filter) => {
     setFilter(filter);
   };
 
@@ -207,7 +207,7 @@ export const App = () => {
     <div>
       <select
         defaultValue="all"
-        onChange={(e) => handleSort(e.target.value as Filter)}
+        onChange={(e) => handleFilter(e.target.value as Filter)}
       >
         <option value="all">すべてのタスク</option>
         <option value="checked">完了したタスク</option>

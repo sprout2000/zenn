@@ -62,7 +62,7 @@ export const App = () => {
 `Filter型`の変数を引数に取り、ステートを更新するだけの関数ですが、[chap.07](https://zenn.dev/sprout2000/books/76a279bb90c3f3/viewer/chapter07) での `handleChange` 関数と同様に、のちのコンポーネント分割の際に _props_ として利用しやすくなります。
 
 ```tsx:src/App.tsx
-const handleSort = (filter: Filter) => {
+const handleFilter = (filter: Filter) => {
   setFilter(filter);
 };
 ```
@@ -73,7 +73,7 @@ const handleSort = (filter: Filter) => {
       // e.target.value: string を Filter型にアサーションする
       <select
         defaultValue="all"
-        onChange={(e) => handleSort(e.target.value as Filter)}
+        onChange={(e) => handleFilter(e.target.value as Filter)}
       >
         <option value="all">すべてのタスク</option>
         <option value="checked">完了したタスク</option>
@@ -241,7 +241,7 @@ export const App = () => {
     });
   };
 
-  const handleSort = (filter: Filter) => {
+  const handleFilter = (filter: Filter) => {
     setFilter(filter);
   };
 
@@ -264,7 +264,7 @@ export const App = () => {
     <div>
       <select
         defaultValue="all"
-        onChange={(e) => handleSort(e.target.value as Filter)}
+        onChange={(e) => handleFilter(e.target.value as Filter)}
       >
         <option value="all">すべてのタスク</option>
         <option value="checked">完了したタスク</option>

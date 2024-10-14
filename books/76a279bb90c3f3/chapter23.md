@@ -458,7 +458,7 @@ export const App = () => {
     setTodos((todos) => todos.filter((todo) => !todo.removed));
   };
 
-  const handleSort = (filter: Filter) => {
+  const handleFilter = (filter: Filter) => {
     setFilter(filter);
   };
 
@@ -468,7 +468,7 @@ export const App = () => {
       <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
       <SideBar
         drawerOpen={drawerOpen}
-        onSort={handleSort}
+        onSort={handleFilter}
         onToggleQR={handleToggleQR}
         onToggleDrawer={handleToggleDrawer}
       />

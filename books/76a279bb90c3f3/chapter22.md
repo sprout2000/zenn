@@ -73,7 +73,7 @@ import { QR } from './QR';
 ```diff tsx:src/App.tsx
        <SideBar
          drawerOpen={drawerOpen}
-         onSort={handleSort}
+         onSort={handleFilter}
          onToggleDrawer={handleToggleDrawer}
        />
 +      <QR open={qrOpen} onClose={handleToggleQR} />
@@ -116,7 +116,7 @@ QR を開くボタンを **SideBar コンポーネント** のリストへ追加
     {/* snip */}
     <SideBar
       drawerOpen={drawerOpen}
-      onSort={handleSort}
+      onSort={handleFilter}
       // ↓追加
       onToggleQR={handleToggleQR}
       onToggleDrawer={handleToggleDrawer}
@@ -364,7 +364,7 @@ export const App = () => {
     setTodos((todos) => todos.filter((todo) => !todo.removed));
   };
 
-  const handleSort = (filter: Filter) => {
+  const handleFilter = (filter: Filter) => {
     setFilter(filter);
   };
 
@@ -374,7 +374,7 @@ export const App = () => {
       <ToolBar filter={filter} onToggleDrawer={handleToggleDrawer} />
       <SideBar
         drawerOpen={drawerOpen}
-        onSort={handleSort}
+        onSort={handleFilter}
         onToggleQR={handleToggleQR}
         onToggleDrawer={handleToggleDrawer}
       />

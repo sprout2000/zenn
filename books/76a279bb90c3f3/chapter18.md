@@ -266,7 +266,7 @@ import { SideBar } from './SideBar';
 ```diff tsx:src/App.tsx
     return (
       <div>
-+       <SideBar onSort={handleSort} />
++       <SideBar onSort={handleFilter} />
         <FormDialog
           text={text}
           onChange={handleOnChange}
@@ -348,7 +348,7 @@ import { TodoItem } from './TodoItem';
 ```diff tsx:src/App.tsx
     return (
       <div>
-        <SideBar onSort={handleSort} />
+        <SideBar onSort={handleFilter} />
         <FormDialog
           text={text}
           onChange={handleChange}
@@ -644,13 +644,13 @@ export const App = () => {
     setTodos((todos) => todos.filter((todo) => !todo.removed));
   };
 
-  const handleSort = (filter: Filter) => {
+  const handleFilter = (filter: Filter) => {
     setFilter(filter);
   };
 
   return (
     <div>
-      <SideBar onSort={handleSort} />
+      <SideBar onSort={handleFilter} />
       <FormDialog text={text} onChange={handleChange} onSubmit={handleSubmit} />
       <TodoItem todos={todos} filter={filter} onTodo={handleTodo} />
       <ActionButton todos={todos} onEmpty={handleEmpty} />
