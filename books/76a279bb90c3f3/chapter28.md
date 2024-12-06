@@ -242,11 +242,11 @@ export default defineConfig({
   );
 ```
 
-ただし、これだけだと型宣言なしのエラーになってしまうため、`tsconfig.json` に型定義を追記します。
+ただし、これだけだと型宣言なしのエラーになってしまうため、`tsconfig.app.json` に型定義を追記します。
 
 ![](https://storage.googleapis.com/zenn-user-upload/d197527b9feca0df1003ca19.png)
 
-```json:tsconfig.json
+```json:tsconfig.app.json
 {
   "compilerOptions": {
     // ~ snip ~
