@@ -28,7 +28,7 @@ https://brew.sh/
 
 # 1. パスの設定
 
-M プロセッサ (Apple Silicon) 搭載 Mac の場合は、**Homebrew** 向けにパスを通しておく必要があります。
+まず **Homebrew** 向けにパスを通しておく必要があります。
 
 ```sh
 # デフォルトのパスを確認
@@ -36,7 +36,7 @@ M プロセッサ (Apple Silicon) 搭載 Mac の場合は、**Homebrew** 向け�
 /usr/local/bin /usr/bin /bin /usr/sbin /sbin /Library/Apple/usr/bin /Library/Frameworks/Mono.framework/Versions/Current/Commands
 ```
 
-Intel Mac であればこのままでも差し支えありませんが、Apple Silicon Mac では **Homebrew** のインストール先が `/opt/homebrew` 以下となるので、ここへパスを通しておきます。
+**Homebrew** のインストール先は `/opt/homebrew` 以下となるので、ここへパスを通しておきます。
 ホームディレクトリ (`/Users/ユーザー名`) に `.zshrc` を作成します。
 
 ```shell:~/.zshrc
@@ -55,10 +55,6 @@ path=(
 ```
 
 優先してほしい順にパスを指定していきます。
-
-:::message
-Intel Mac では、**`/usr/local/bin`** と **`/usr/local/sbin`** を優先させてください。
-:::
 
 **`(N-/)`** は、もしそのディレクトリが存在していれば **PATH** に追加し、そうでなければ無視してくれるオプションです。
 上のパス設定を反映させるには `~/.zshrc` を読み込みます。
@@ -464,51 +460,41 @@ https://qiita.com/sprout2000/questions/daaa95192fab3ac291ee
 ZLE_REMOVE_SUFFIX_CHARS=$''
 ```
 
-# ここまでの `~/.zshrc`
-
-:::details （クリックで展開）
+# ここまでの `~/.zshrc` と `~/.zshenv`
 
 ```shell:~/.zshrc
-setopt nonomatch
-setopt RM_STAR_SILENT
-ZLE_REMOVE_SUFFIX_CHARS=$''
-
 autoload -Uz colors && colors
 zstyle ":completion:*:commands" rehash 1
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  autoload -Uz compinit && compinit
-  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
-fi
+setopt RM_STAR_SILENT
+setopt nonomatch
+
+ZLE_REMOVE_SUFFIX_CHARS=$''
 
 typeset -U path PATH
 path=(
   /opt/homebrew/bin(N-/)
   /opt/homebrew/sbin(N-/)
-  /usr/local/bin(N-/)
-  /usr/local/sbin(N-/)
   /usr/bin
   /usr/sbin
   /bin
   /sbin
+  /usr/local/bin(N-/)
+  /usr/local/sbin(N-/)
   /Library/Apple/usr/bin
 )
 
-if type brew &>/dev/null && type $(brew --prefix)/bin/python3.11 &>/dev/null; then
-  alias python="$(brew --prefix)/bin/python3.11"
-  alias pip="$(brew --prefix)/bin/pip3.11"
-else
-  alias python="/usr/bin/python3"
-  alias pip="/usr/bin/pip3"
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  autoload -Uz compinit && compinit
 fi
 
 git_prompt() {
   if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = true ]; then
-    PROMPT="%F{034}%n%f:%F{020}%~%f $(git_super_status)"$'\n'"%# "
+    PROMPT="%F{034}%h%f:%F{020}%~%f $(git_super_status)"$'\n'"%# "
   else
-    PROMPT="%F{034}%n%f:%F{020}%~%f "$'\n'"%# "
+    PROMPT="%F{034}%h%f:%F{020}%~%f "$'\n'"%# "
   fi
 }
 
@@ -520,75 +506,16 @@ add_newline() {
   fi
 }
 
+tgz() {
+  env COPYFILE_DISABLE=1 tar zcvf "$1" --exclude=".DS_Store" "${@:2}"
+}
+
 precmd() {
   git_prompt
   add_newline
 }
-
-tgz() {
-  if [ $# -lt 2 ]; then
-    echo "Usage: tgz DIST SOURCE"
-  else
-    xattr -rc "${@:2}" && \
-    env COPYFILE_DISABLE=1 tar zcvf "$1" --exclude=".DS_Store" "${@:2}"
-  fi
-}
 ```
 
-:::
-
-# （おまけ） `x64` と `arm64` の環境を行ったり来たりする (Apple Silicon)
-
-**M プロセッサ**を搭載した Mac で **Rosetta 2** と **arm64** の環境をコマンドラインから切り替えられるようにします。
-
-:::message
-
-以下のような環境を前提としています。
-
-- **Rosetta 2** をインストール済み
-- ターミナルでは **Rosetta 2** をオフ（デフォルトのまま）
-
-![](https://storage.googleapis.com/zenn-user-upload/8fdf999c59758688bdf2242f.png =240x)
-
-:::
-
-```shell:~/.zshrc
-# エイリアスを設定
-if (( $+commands[arch] )); then
-  alias x64='exec arch -arch x86_64 "$SHELL"'
-  alias a64='exec arch -arch arm64e "$SHELL"'
-fi
-
-# 上記エイリアスが実行されると環境変数を書き換えます
-if [[ $(uname -m) == "x86_64" ]]; then
-  export VOLTA_HOME="$HOME/.volta_x64"
-  typeset -U path PATH
-  path=(
-    $VOLTA_HOME/bin
-    /usr/local/bin(N-/)
-    /usr/local/sbin(N-/)
-    /usr/bin
-    /usr/sbin
-    /bin
-    /sbin
-    /Library/Apple/usr/bin
-  )
-else
-  export VOLTA_HOME="$HOME/.volta"
-  typeset -U path PATH
-  path=(
-    $VOLTA_HOME/bin
-    /opt/homebrew/bin(N-/)
-    /opt/homebrew/sbin(N-/)
-    /usr/bin
-    /usr/sbin
-    /bin
-    /sbin
-    /usr/local/bin
-    /usr/local/sbin
-    /Library/Apple/usr/bin
-  )
-fi
+```sh:~/.zshenv
+. "$HOME/.zshrc"
 ```
-
-![2021-09-17-155039.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/609660/e1c16fd1-2cfa-0d5c-544f-8b5752572054.png =480x)
