@@ -486,6 +486,7 @@ path=(
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   autoload -Uz compinit && compinit
 fi
